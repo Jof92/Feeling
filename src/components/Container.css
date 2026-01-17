@@ -1,0 +1,48 @@
+/* src/components/Container.css */
+.main-layout {
+  display: flex;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 0 15px;
+  gap: 24px;
+}
+
+.identity-card {
+  flex: 0 0 220px; /* Largura fixa para o card de identidade */
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.identity-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #5c6bc0;
+  margin-bottom: 16px;
+}
+
+.identity-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0 0 8px;
+}
+
+.identity-tagline {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0;
+  font-style: italic;
+}
+
+.content-area {
+  flex: 1;
+  min-width: 0;
+}

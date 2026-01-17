@@ -1,7 +1,8 @@
 // src/components/Header.jsx
 import React, { useState, useRef, useEffect } from "react";
-import { db, auth } from "../firebase"; // 👈 agora importa auth também
+import { db, auth } from "../firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { signOut } from "firebase/auth"; // 👈 adicionado
 
 const feelingColors = {
   happy: "#FFD700",
@@ -38,7 +39,6 @@ export default function Header({ onSetFeeling }) {
     }
   }, [isDropdownOpen]);
 
-  // Função para salvar no Firestore — agora com autenticação
   const saveFeelingToFirestore = async (feeling) => {
     const user = auth.currentUser;
     if (!user) {
@@ -49,7 +49,7 @@ export default function Header({ onSetFeeling }) {
     try {
       await addDoc(collection(db, "feelings"), {
         feeling,
-        userId: user.uid, // 👈 identifica o usuário
+        userId: user.uid,
         timestamp: serverTimestamp(),
       });
       console.log("Sentimento salvo no Firebase:", feeling);
@@ -63,6 +63,16 @@ export default function Header({ onSetFeeling }) {
     onSetFeeling(feeling);
     saveFeelingToFirestore(feeling);
     setIsDropdownOpen(false);
+  };
+
+  // Função de logout
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      onSetFeeling(null); // reseta o sentimento no App
+    } catch (error) {
+      console.error("Erro ao sair:", error);
+    }
   };
 
   const currentEmoji = feelingEmojis[selectedFeeling];
@@ -88,6 +98,15 @@ export default function Header({ onSetFeeling }) {
           {currentEmoji}
         </span>
       </div>
+
+      {/* Botão "Sair" — sempre visível quando logado */}
+      <button
+        onClick={handleLogout}
+        style={styles.logoutButton}
+        aria-label="Sair da conta"
+      >
+        Sair
+      </button>
 
       {/* Dropdown de emoções */}
       {isDropdownOpen && (
@@ -131,6 +150,20 @@ const styles = {
     fontSize: "24px",
     cursor: "pointer",
     transition: "transform 0.2s",
+  },
+  logoutButton: {
+    background: "none",
+    border: "1px solid rgba(255,255,255,0.7)",
+    color: "#fff",
+    padding: "6px 12px",
+    borderRadius: "20px",
+    fontSize: "14px",
+    fontWeight: "600",
+    cursor: "pointer",
+    transition: "all 0.2s",
+  },
+  logoutButtonHover: {
+    // estilo aplicado via hover no CSS ou inline com onMouseEnter/Leave se quiser mais controle
   },
   dropdown: {
     position: "absolute",
