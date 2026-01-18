@@ -1,6 +1,6 @@
 // src/components/Home.jsx
 import React, { useState, useEffect } from 'react';
-import feelingImage from '../assets/feeling2.png';
+import feelingImage from '../assets/feeling3.png';
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -92,7 +92,9 @@ const Home = () => {
     <div className="home-container">
       {/* Imagem à esquerda */}
       <div className="left-section">
-        <img src={feelingImage} alt="Feeling" className="feeling-logo" />
+        <div className="logo-container">
+          <img src={feelingImage} alt="Feeling" className="feeling-logo" />
+        </div>
       </div>
 
       {/* Seção direita */}
@@ -139,7 +141,6 @@ const Home = () => {
               ←
             </button>
 
-            {/* Não mostra o toggle aqui — apenas o formulário */}
             <form onSubmit={handleEmailAuth} className="auth-form">
               {error && <div className="auth-error">{error}</div>}
 

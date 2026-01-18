@@ -3,15 +3,16 @@ import React from 'react';
 import Header from './Header';
 import PostBox from './PostBox';
 import Feed from './Feed';
-import Identity from './Identity'; // ← novo
-import './Container.css'; // ← vamos criar este CSS
+import Identity from './Identity';
+import './Container.css';
 
 const Container = ({ user, onSetFeeling, currentFeeling }) => {
   return (
     <>
       <Header onSetFeeling={onSetFeeling} />
       <div className="main-layout">
-        <Identity />
+        {/* ✅ Passando as props para Identity */}
+        <Identity currentFeeling={currentFeeling} onSetFeeling={onSetFeeling} />
         <div className="content-area">
           <PostBox currentFeeling={currentFeeling} />
           <Feed />

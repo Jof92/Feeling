@@ -22,7 +22,7 @@
 .identity-avatar {
   width: 80px;
   height: 80px;
-  border-radius: 50%;
+  border-radius: 10%;
   object-fit: cover;
   border: 2px solid #5c6bc0;
   margin-bottom: 16px;
